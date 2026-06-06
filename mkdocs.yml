@@ -1,0 +1,43 @@
+site_name: just some fw16 guides
+site_url: https://trapstoner.github.io/fw16
+site_author: TrapStoner
+site_description: Framework 16 AMD Fedora Linux guides
+
+repo_name: TrapStoner/fw16
+repo_url: https://github.com/TrapStoner/fw16
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+
+nav:
+  - Home: index.md
+  - Guides:
+      - Hibernate Setup — Framework 16 AMD (Fedora): guides/hibernate-fedora-fw16.md
