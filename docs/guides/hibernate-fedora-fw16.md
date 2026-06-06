@@ -4,11 +4,13 @@
 **Tested with:** Fedora 44 · KDE Plasma 6 · Wayland · btrfs root · kernel 7.0.x  
 **Applies to:** Fedora 40+ on Framework 16 AMD (and likely other AMD btrfs Fedora laptops)
 
+<!-- prettier-ignore -->
 !!! danger "Before you begin"
-This guide requires **Secure Boot disabled** and a **non-encrypted (no LUKS) filesystem**. If either applies to you, additional steps are needed that are not covered here. If you know what you're doing, you can disable Secure Boot in your BIOS — but be aware it removes firmware-level verification of your bootloader and kernel, weakening protection against bootkits and unsigned code. I am not responsible for any consequences. With that out of the way — enjoy!
+    This guide requires **Secure Boot disabled** and a **non-encrypted (no LUKS) filesystem**. If either applies to you, additional steps are needed that are not covered here. If you know what you're doing, you can disable Secure Boot in your BIOS — but be aware it removes firmware-level verification of your bootloader and kernel, weakening protection against bootkits and unsigned code. I am not responsible for any consequences. With that out of the way — enjoy!
 
+<!-- prettier-ignore -->
 !!! note "Desktop environment"
-This guide is written for and tested on KDE Plasma on Wayland. Steps involving power management settings reference KDE System Settings. If you use GNOME, sway, or another DE/WM, all kernel and system steps are identical — only the DE-specific power management configuration differs. Look up the equivalent settings for your environment.
+    This guide is written for and tested on KDE Plasma on Wayland. Steps involving power management settings reference KDE System Settings. If you use GNOME, sway, or another DE/WM, all kernel and system steps are identical — only the DE-specific power management configuration differs. Look up the equivalent settings for your environment.
 
 ---
 
@@ -20,8 +22,9 @@ Btrfs swapfiles have a physical offset into the filesystem that the kernel must 
 
 Fedora also enforces SELinux, which by default denies systemd-logind and systemd-sleep the permissions needed to trigger hibernation to a swapfile. This must be explicitly allowed via custom SELinux policy modules — a Fedora-specific requirement.
 
+<!-- prettier-ignore -->
 !!! important "s2idle only"
-The Framework 16 AMD only supports `s2idle` (suspend-to-idle / S0ix), not S3 deep sleep. This is a firmware limitation, not an OS one. Hibernate itself (S4) works fine and is what this guide sets up.
+    The Framework 16 AMD only supports `s2idle` (suspend-to-idle / S0ix), not S3 deep sleep. This is a firmware limitation, not an OS one. Hibernate itself (S4) works fine and is what this guide sets up.
 
 ---
 
@@ -42,8 +45,9 @@ Btrfs swapfiles must live on a subvolume with No_COW (no copy-on-write) and no c
 sudo btrfs subvolume create /var/swap
 ```
 
+<!-- prettier-ignore -->
 !!! note
-Btrfs COW and compression are incompatible with swapfiles — the kernel requires swapfiles to have contiguous, non-compressed extents. A dedicated subvolume lets you disable these without affecting the rest of the filesystem.
+    Btrfs COW and compression are incompatible with swapfiles — the kernel requires swapfiles to have contiguous, non-compressed extents. A dedicated subvolume lets you disable these without affecting the rest of the filesystem.
 
 **(Optional) Verify No_COW and compression are correctly set:**
 
@@ -98,8 +102,9 @@ Check your typical RAM usage:
 free -h
 ```
 
+<!-- prettier-ignore -->
 !!! tip
-If you consistently have lots of free RAM when hibernating, the minimum formula is safe for your workload. The safe formula is recommended regardless — disk space is cheaper than a corrupted resume.
+    If you consistently have lots of free RAM when hibernating, the minimum formula is safe for your workload. The safe formula is recommended regardless — disk space is cheaper than a corrupted resume.
 
 ---
 
@@ -153,8 +158,9 @@ sudo btrfs inspect-internal map-swapfile -r /var/swap/swapfile
 
 Example: `6148378` — call it `SWAP_OFFSET`.
 
+<!-- prettier-ignore -->
 !!! warning "Never use filefrag for btrfs"
-Never use the `filefrag` method for btrfs. Unlike ext4/xfs, btrfs has its own internal extent layout. The `btrfs inspect-internal map-swapfile -r` command gives the correct physical offset directly with no math required. Using `filefrag` will give you a wrong offset and a broken hibernate.
+    Never use the `filefrag` method for btrfs. Unlike ext4/xfs, btrfs has its own internal extent layout. The `btrfs inspect-internal map-swapfile -r` command gives the correct physical offset directly with no math required. Using `filefrag` will give you a wrong offset and a broken hibernate.
 
 ---
 
@@ -170,8 +176,9 @@ Add at the end:
 /var/swap/swapfile    none    swap    defaults,pri=0    0 0
 ```
 
+<!-- prettier-ignore -->
 !!! note
-`pri=0` sets the swapfile's priority as low as possible. zram runs at priority 100 and is always used first. The swapfile is only written to during hibernation or if zram is completely exhausted — not as everyday swap. If you already have the swapfile in fstab without `pri=0`, add it — the system won't break without it but it's better practice.
+    `pri=0` sets the swapfile's priority as low as possible. zram runs at priority 100 and is always used first. The swapfile is only written to during hibernation or if zram is completely exhausted — not as everyday swap. If you already have the swapfile in fstab without `pri=0`, add it — the system won't break without it but it's better practice.
 
 ---
 
@@ -187,11 +194,13 @@ Replace with your actual values from Step 4. Example:
 sudo grubby --update-kernel=ALL --args="resume=UUID=db92b2a3-b007-4f8f-8349-73276a3fe5be resume_offset=6148378"
 ```
 
+<!-- prettier-ignore -->
 !!! important
-Without both parameters, the kernel either cannot find the hibernate image at all or reads from the wrong location. `resume=UUID=...` identifies the block device; `resume_offset=...` identifies where within it the swapfile begins.
+    Without both parameters, the kernel either cannot find the hibernate image at all or reads from the wrong location. `resume=UUID=...` identifies the block device; `resume_offset=...` identifies where within it the swapfile begins.
 
+<!-- prettier-ignore -->
 !!! note
-Parameters are inherited automatically on kernel updates. You do not need to rerun this when a new kernel is installed.
+    Parameters are inherited automatically on kernel updates. You do not need to rerun this when a new kernel is installed.
 
 ---
 
@@ -220,8 +229,9 @@ sudo dnf install dracut-util
 sudo dracut --force --regenerate-all
 ```
 
+<!-- prettier-ignore -->
 !!! note
-Fedora's kernel-install hook rebuilds the initramfs automatically when a new kernel is installed. You do not need to rerun dracut on kernel updates.
+    Fedora's kernel-install hook rebuilds the initramfs automatically when a new kernel is installed. You do not need to rerun dracut on kernel updates.
 
 ---
 
@@ -234,8 +244,9 @@ sudo semanage fcontext -a -t swapfile_t '/var/swap(/.*)?'
 sudo restorecon -RF /var/swap
 ```
 
+<!-- prettier-ignore -->
 !!! note
-This is a Fedora-specific step. Distros without SELinux enforcing (Arch, Ubuntu default, etc.) can skip it. Without it, hibernate silently fails or returns immediately to the login screen.
+    This is a Fedora-specific step. Distros without SELinux enforcing (Arch, Ubuntu default, etc.) can skip it. Without it, hibernate silently fails or returns immediately to the login screen.
 
 ---
 
@@ -245,8 +256,9 @@ This is a Fedora-specific step. Distros without SELinux enforcing (Arch, Ubuntu 
 sudo reboot
 ```
 
+<!-- prettier-ignore -->
 !!! important
-A clean reboot is required so the audit log is fresh before the SELinux policy steps. Leftover audit events from normal use will pollute the generated policy.
+    A clean reboot is required so the audit log is fresh before the SELinux policy steps. Leftover audit events from normal use will pollute the generated policy.
 
 ---
 
@@ -275,8 +287,9 @@ allow systemd_logind_t swapfile_t:dir search;
 
 This first-pass rule is consistent across Fedora 40–44. The rules relevant to hibernate will always involve `systemd_logind_t`, `systemd_sleep_t`, or `swapfile_t`.
 
+<!-- prettier-ignore -->
 !!! warning
-Only proceed with generating the policy if the output contains rules involving `systemd_logind_t`, `systemd_sleep_t`, or `swapfile_t` exclusively. If you see anything else, reboot and redo this step (yes, you have to reboot again) with a clean audit log.
+    Only proceed with generating the policy if the output contains rules involving `systemd_logind_t`, `systemd_sleep_t`, or `swapfile_t` exclusively. If you see anything else, reboot and redo this step (yes, you have to reboot again) with a clean audit log.
 
 Generate and load the policy:
 
@@ -315,11 +328,13 @@ allow systemd_sleep_t self:capability sys_admin;
 allow systemd_sleep_t swapfile_t:dir search;
 ```
 
+<!-- prettier-ignore -->
 !!! warning
-Always trust `audit2allow -b` output **over any guide, including this one** — hibernate-related rules will always involve `systemd_logind_t`, `systemd_sleep_t`, or `swapfile_t`. If you see rules involving anything else, reboot and redo this step (yes, you have to reboot again) with a clean audit log.
+    Always trust `audit2allow -b` output **over any guide, including this one** — hibernate-related rules will always involve `systemd_logind_t`, `systemd_sleep_t`, or `swapfile_t`. If you see rules involving anything else, reboot and redo this step (yes, you have to reboot again) with a clean audit log.
 
+<!-- prettier-ignore -->
 !!! note
-The rule changed between Fedora 40 and later versions. On Fedora 41+ the base SELinux policy already grants `sys_admin` capability to `systemd_sleep_t` so it no longer appears as a denial — instead a directory search permission on the swapfile path is what's missing. Future Fedora versions may differ further.
+    The rule changed between Fedora 40 and later versions. On Fedora 41+ the base SELinux policy already grants `sys_admin` capability to `systemd_sleep_t` so it no longer appears as a denial — instead a directory search permission on the swapfile path is what's missing. Future Fedora versions may differ further.
 
 Generate and load:
 
@@ -377,8 +392,9 @@ esac
 sudo chmod +x /usr/lib/systemd/system-sleep/wifi-hibernate.sh
 ```
 
+<!-- prettier-ignore -->
 !!! note
-The script only triggers on `hibernate` and `suspend-then-hibernate` — not regular suspend. WiFi is unaffected during normal sleep/wake cycles.
+    The script only triggers on `hibernate` and `suspend-then-hibernate` — not regular suspend. WiFi is unaffected during normal sleep/wake cycles.
 
 ### If you switch to OR already have Intel AX210 (iwlwifi)
 
@@ -476,8 +492,9 @@ Disables GPU runtime power management entirely, eliminating VRAM state corruptio
 - Delete and recreate the swapfile (e.g. to resize it)
 - Repartition your btrfs partition (expand, shrink, or restore from backup to a different layout)
 
+<!-- prettier-ignore -->
 !!! danger
-Hibernating with a stale `resume_offset` after a partition or swapfile change will result in data corruption or a broken resume. Always re-derive the offset before the next hibernate.
+    Hibernating with a stale `resume_offset` after a partition or swapfile change will result in data corruption or a broken resume. Always re-derive the offset before the next hibernate.
 
 **After any such operation, before hibernating:**
 
@@ -495,15 +512,17 @@ sudo dracut --force --regenerate-all
 cat /proc/cmdline | tr ' ' '\n' | grep resume
 ```
 
+<!-- prettier-ignore -->
 !!! note
-If you shrink a Windows partition and expand your btrfs partition, the btrfs physical extent layout shifts even if you don't touch the swapfile. The offset becomes invalid. This applies to Clonezilla backup → repartition → restore workflows too — always re-derive the offset after any partition boundary change before hibernating.
+    If you shrink a Windows partition and expand your btrfs partition, the btrfs physical extent layout shifts even if you don't touch the swapfile. The offset becomes invalid. This applies to Clonezilla backup → repartition → restore workflows too — always re-derive the offset after any partition boundary change before hibernating.
 
 ---
 
 ### Snapper hourly wakes from suspend (if Snapper is configured)
 
+<!-- prettier-ignore -->
 !!! note
-Only relevant if you have Snapper set up for btrfs snapshots. Snapper is not installed by default on Fedora KDE. If you didn't set it up, skip this section.
+    Only relevant if you have Snapper set up for btrfs snapshots. Snapper is not installed by default on Fedora KDE. If you didn't set it up, skip this section.
 
 If your system wakes from suspend hourly when untouched, Snapper's timeline timer may be the cause. Diagnose:
 
