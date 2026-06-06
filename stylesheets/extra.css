@@ -1,0 +1,25 @@
+/* Darker background for dark mode (slate scheme) */
+[data-md-color-scheme="slate"] {
+	--md-default-bg-color: #0d0d14;
+	--md-default-bg-color--light: #13131f;
+	--md-default-bg-color--lighter: #16162a;
+	--md-default-bg-color--lightest: #1a1a2e;
+	--md-code-bg-color: #111120;
+}
+
+/* Deep space purple accent — both themes */
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="default"] {
+	--md-accent-fg-color: #7c3aed;
+	--md-accent-fg-color--transparent: rgba(124, 58, 237, 0.1);
+	--md-typeset-a-color: #9d6cf5;
+}
+
+/* Home title color per theme */
+[data-md-color-scheme="default"] .home-title {
+	color: #0d0d14;
+}
+
+[data-md-color-scheme="slate"] .home-title {
+	color: #e8e8ff;
+}
