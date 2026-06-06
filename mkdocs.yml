@@ -9,14 +9,18 @@ repo_url: https://github.com/TrapStoner/fw16
 theme:
   name: material
   palette:
-    - scheme: default
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
     - scheme: slate
+      primary: deep purple
+      accent: deep purple
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+    - scheme: default
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
   features:
     - navigation.instant
     - navigation.tracking
@@ -25,8 +29,15 @@ theme:
     - search.suggest
     - content.code.copy
 
+extra_css:
+  - stylesheets/extra.css
+
+# To change accent color later, edit docs/stylesheets/extra.css
+# Full color list: https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/
+
 markdown_extensions:
   - admonition
+  - md_in_html
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.highlight:

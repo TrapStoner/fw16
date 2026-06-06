@@ -1,6 +1,11 @@
-<div align="center"><a name="readme-top"></a>
+---
+hide:
+  - navigation
+---
 
-# just some framework 16 guides
+<div align="center" markdown>
+
+<h1 class="home-title" style="font-weight: 900; letter-spacing: 0.05em;">just some fw16 guides</h1>
 
 ![Framework](https://img.shields.io/badge/Framework%2016-000000?style=for-the-badge&logo=framework&logoColor=white)
 ![Fedora](https://img.shields.io/badge/Fedora-51A2DA?style=for-the-badge&logo=fedora&logoColor=white)
@@ -8,13 +13,13 @@
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![Docs](https://img.shields.io/badge/Docs-grey?style=for-the-badge&logo=readthedocs&logoColor=white)
 
-<br/>
-
 I've spent **just a tad bit** of hours shaping and chiseling Linux into perfection on my Framework 16. Some of it was fun. Some of it was me staring at a Linux recovery mode terminal at 4am, won't lie. It's all in the spirit of learning and improving.
 
 This repo is where I document the things I figured out — for my future reference, and hopefully they can be just as useful to a handful of people too. One guide that actually explains _why_, not just _what_.
 
 </div>
+
+---
 
 ## My setup
 
@@ -35,9 +40,10 @@ The guides are written from my setup but they try hard not to be _about_ my setu
 
 If you notice repeated explanations across guides — that's intentional. Each guide is written to stand alone and be useful to someone who landed on it directly without reading anything else first, even if they're not deep in the Linux rabbit hole yet.
 
+<!-- prettier-ignore -->
 !!! tip
-Have you tried corrupting your bootloader yet? TRUST ME it's lots of fun I swear... <br/>
-<sub>just remember to make a full disk image with clonezilla **_BEFORE_** the point of no return</sub>
+    Have you tried corrupting your bootloader yet? TRUST ME it's lots of fun I swear...<br>
+    <sub>just remember to make a full disk image with clonezilla **_BEFORE_** the point of no return</sub>
 
 ---
 
