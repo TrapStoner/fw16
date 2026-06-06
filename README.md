@@ -43,9 +43,15 @@ If you notice repeated explanations across guides — that's intentional. Each g
 
 ## Guides
 
-| Guide                                                                               | Description                                                                                              |
-| ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| [Hibernate Setup — Framework 16 AMD (Fedora)](docs/guides/hibernate-fedora-fw16.md) | Full hibernate setup on btrfs with swapfile, SELinux policy, WiFi fix, and suspend-then-hibernate config |
+<div align="center">
+
+### 📖 Read the guides at
+
+[![Documentation](https://img.shields.io/badge/trapstoner.github.io%2Ffw16-7c3aed?style=for-the-badge&logo=materialformkdocs&logoColor=white)](https://trapstoner.github.io/fw16)
+
+_Searchable · Dark mode · Mobile friendly_
+
+</div>
 
 ---
 
