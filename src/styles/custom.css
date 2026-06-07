@@ -200,11 +200,11 @@ html {
 /* ==========================================================
    HEADINGS
    ========================================================== */
-.sl-markdown-content h2 {
+/* .sl-markdown-content h2 {
 	border-bottom: 1px solid
 		color-mix(in srgb, var(--sl-color-accent) 22%, transparent);
 	padding-bottom: 0.35em;
-}
+} */
 
 /* ==========================================================
    HORIZONTAL RULE
