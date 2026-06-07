@@ -40,6 +40,67 @@ h1#_top {
   border-color: color-mix(in srgb, var(--c) 40%, transparent) !important;
 }
 
+/* Tables */
+.sl-markdown-content table {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--sl-color-accent) 35%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--sl-color-accent) 10%, transparent),
+    0 4px 24px color-mix(in srgb, var(--sl-color-accent) 10%, transparent);
+}
+
+.sl-markdown-content thead tr {
+  background: linear-gradient(
+    120deg,
+    var(--sl-color-accent),
+    color-mix(in srgb, var(--sl-color-accent) 75%, #000)
+  );
+}
+
+.sl-markdown-content th {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--sl-color-accent) 50%, #000);
+  text-align: start;
+}
+
+/* Override Starlight's first/last-child zero padding */
+.sl-markdown-content :is(th, td):first-child { padding-inline-start: 1rem; }
+.sl-markdown-content :is(th, td):last-child  { padding-inline-end: 1rem; }
+
+.sl-markdown-content tbody tr {
+  transition: background 0.12s ease;
+}
+
+.sl-markdown-content tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--sl-color-accent) 5%, transparent);
+}
+
+.sl-markdown-content tbody tr:hover {
+  background: color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+}
+
+.sl-markdown-content td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+  color: var(--sl-color-text);
+  vertical-align: baseline;
+}
+
+.sl-markdown-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
 /* Non-selectable shell prompt on bash code blocks */
 pre[data-language="bash"] .ec-line:not(.no-prompt) .code::before {
   content: '$ ';
