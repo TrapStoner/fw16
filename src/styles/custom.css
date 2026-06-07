@@ -28,11 +28,11 @@ html:not([data-has-sidebar]) h1#_top {
 }
 
 #setup-grid article.card:nth-child(1) { --c: #7c3aed; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(2) { --c: #3b82f6; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(3) { --c: #51a2da; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(4) { --c: #1d99f3; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(5) { --c: #10b981; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(6) { --c: #fcc624; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(2) { --c: #6366f1; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(3) { --c: #4f46e5; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(4) { --c: #3b82f6; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(5) { --c: #0ea5e9; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(6) { --c: #06b6d4; border-top: 3px solid var(--c); }
 
 #setup-grid article.card .icon {
   color: var(--c) !important;
