@@ -1,6 +1,28 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+const bashPromptPlugin = {
+  name: 'bash-prompt-sign',
+  hooks: {
+    postprocessRenderedLine({ codeBlock, line, renderData }) {
+      if (codeBlock.language !== 'bash') return;
+      const text = line.text;
+      const isScript = codeBlock.getLine(0)?.text.trimStart().startsWith('#!');
+      const isComment = text.trimStart().startsWith('#')
+      if (isScript || isComment || text.trim() === '') {
+        const el = renderData.lineAst;
+        if (!el.properties) el.properties = {};
+        const cls = el.properties.className;
+        if (Array.isArray(cls)) {
+          cls.push('no-prompt');
+        } else {
+          el.properties.className = cls ? [cls, 'no-prompt'] : ['no-prompt'];
+        }
+      }
+    },
+  },
+};
+
 export default defineConfig({
   site: 'https://trapstoner.github.io',
   base: '/fw16',
@@ -22,6 +44,9 @@ export default defineConfig({
           ],
         },
       ],
+      expressiveCode: {
+        plugins: [bashPromptPlugin],
+      },
       customCss: ['./src/styles/custom.css'],
       defaultLocale: 'root',
       locales: {

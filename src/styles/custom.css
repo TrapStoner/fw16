@@ -40,6 +40,14 @@ h1#_top {
   border-color: color-mix(in srgb, var(--c) 40%, transparent) !important;
 }
 
+/* Non-selectable shell prompt on bash code blocks */
+pre[data-language="bash"] .ec-line:not(.no-prompt) .code::before {
+  content: '$ ';
+  user-select: none;
+  -webkit-user-select: none;
+  opacity: 0.4;
+}
+
 /* Green tip asides */
 .starlight-aside--tip {
   --sl-color-asides-text-accent: #22c55e;
