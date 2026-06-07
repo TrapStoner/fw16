@@ -47,6 +47,9 @@ export default defineConfig({
       expressiveCode: {
         plugins: [bashPromptPlugin],
       },
+      components: {
+        SocialIcons: './src/components/RepoBadge.astro',
+      },
       customCss: ['./src/styles/custom.css'],
       defaultLocale: 'root',
       locales: {
