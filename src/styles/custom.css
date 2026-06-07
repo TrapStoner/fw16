@@ -17,8 +17,8 @@
   --sl-color-text-accent: #6d28d9;
 }
 
-/* Center page title on all pages */
-h1#_top {
+/* Center h1 on splash (index) only — splash pages have no data-has-sidebar on <html> */
+html:not([data-has-sidebar]) h1#_top {
   text-align: center;
 }
 
