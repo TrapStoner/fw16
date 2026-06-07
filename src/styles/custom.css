@@ -1,123 +1,482 @@
-/* Dark theme overrides */
-:root[data-theme='dark'] {
-  --sl-color-accent-low: #1a0a3d;
-  --sl-color-accent: #7c3aed;
-  --sl-color-accent-high: #c4b5fd;
-  --sl-color-bg: #0d0d14;
-  --sl-color-bg-nav: #0d0d14;
-  --sl-color-bg-sidebar: #13131f;
-  --sl-color-bg-inline-code: #111120;
+/* ==========================================================
+   THEME TOKENS  —  single source of truth
+   To retheme the entire site, edit values in this block.
+   ========================================================== */
+:root {
+	/* Palette */
+	--t-brown-dark: #60463b;
+	--t-brown-mid: #856a5d;
+	--t-lavender: #ccc9e7;
+	--t-gray: #6c6f7d;
+	--t-slate: #2e3138;
+
+	/* Dark-mode derived */
+	--t-bg-dk: #1b1d23;
+	--t-bg-nav-dk: #22242c;
+	--t-bg-side-dk: #1f2128;
+	--t-lavender-dim: #a09dc4;
+	--t-lavender-hi: #dddaee;
+	--t-accent-low-dk: #26233e;
+
+	/* Light-mode derived */
+	--t-bg-lt: #f5f0ed;
+	--t-bg-nav-lt: #ece5e1;
+	--t-bg-side-lt: #e7dfd9;
+	--t-lavender-sat: #7876ab;
+	--t-lavender-deep: #5c5a8f;
+	--t-accent-low-lt: #eae8f6;
+
+	/* Aside semantics */
+	--t-aside-note: var(--t-lavender);
+	--t-aside-tip: #4ade80;
+	--t-aside-caution: #fb923c;
+	--t-aside-danger: #f87171;
+
+	/* Card accents — palette-harmonious, visible on both bg types */
+	--t-card-1: #9b98c7;
+	--t-card-2: #7d7aae;
+	--t-card-3: #a08070;
+	--t-card-4: #7a7d8c;
+	--t-card-5: #856a5d;
+	--t-card-6: #b0aed0;
 }
 
-/* Light theme overrides */
-:root[data-theme='light'] {
-  --sl-color-accent-low: #ede9fe;
-  --sl-color-accent: #7c3aed;
-  --sl-color-accent-high: #5b21b6;
-  --sl-color-text-accent: #6d28d9;
+/* ==========================================================
+   DARK THEME
+   ========================================================== */
+:root[data-theme="dark"] {
+	/* Starlight accent system */
+	--sl-color-accent-low: var(--t-accent-low-dk);
+	--sl-color-accent: var(--t-lavender);
+	--sl-color-accent-high: var(--t-lavender-hi);
+	--sl-color-text-accent: var(--t-lavender);
+
+	/* Backgrounds */
+	--sl-color-bg: var(--t-bg-dk);
+	--sl-color-bg-nav: var(--t-bg-nav-dk);
+	--sl-color-bg-sidebar: var(--t-bg-side-dk);
+	--sl-color-bg-inline-code: color-mix(in srgb, var(--t-lavender) 10%, #1b1d23);
+
+	/* Gray scale: 1=lightest text → 7=darkest bg */
+	--sl-color-white: #ede9f8;
+	--sl-color-gray-1: #d5d1ea;
+	--sl-color-gray-2: #afabca;
+	--sl-color-gray-3: #888598;
+	--sl-color-gray-4: #5e5c6e;
+	--sl-color-gray-5: #3e3c4e;
+	--sl-color-gray-6: var(--t-slate);
+	--sl-color-gray-7: var(--t-bg-dk);
+	--sl-color-black: #0d0f13;
+
+	/* Note aside uses full lavender in dark (readable on dark bg) */
+	--t-aside-note: var(--t-lavender);
+
+	/* Table header: dark purple — white text ≥ 4.5:1 contrast */
+	--t-table-head: #26234e;
 }
 
-/* Center h1 on splash (index) only — splash pages have no data-has-sidebar on <html> */
-html:not([data-has-sidebar]) h1#_top {
-  text-align: center;
+/* ==========================================================
+   LIGHT THEME
+   ========================================================== */
+:root[data-theme="light"] {
+	/* Starlight accent system */
+	--sl-color-accent-low: var(--t-accent-low-lt);
+	--sl-color-accent: var(--t-lavender-sat);
+	--sl-color-accent-high: var(--t-lavender-deep);
+	--sl-color-text-accent: var(--t-lavender-deep);
+
+	/* Backgrounds */
+	--sl-color-bg: var(--t-bg-lt);
+	--sl-color-bg-nav: var(--t-bg-nav-lt);
+	--sl-color-bg-sidebar: var(--t-bg-side-lt);
+	--sl-color-bg-inline-code: color-mix(
+		in srgb,
+		var(--t-lavender-sat) 10%,
+		#f5f0ed
+	);
+
+	/* Gray scale: 1=darkest text → 7=lightest bg */
+	--sl-color-white: var(--t-slate);
+	--sl-color-gray-1: #2e3138;
+	--sl-color-gray-2: #4a4858;
+	--sl-color-gray-3: var(--t-gray);
+	--sl-color-gray-4: #9895a8;
+	--sl-color-gray-5: #c5c2d8;
+	--sl-color-gray-6: #e8e4f2;
+	--sl-color-gray-7: var(--t-bg-lt);
+	--sl-color-black: #f0edfb;
+
+	/* Note aside uses saturated lavender in light (readable on warm bg) */
+	--t-aside-note: var(--t-lavender-sat);
+
+	/* Table header: original accent-based gradient for light mode */
+	--t-table-head: var(--t-lavender-sat);
 }
 
-/* Setup spec cards — compact + colored accents */
-#setup-grid article.card {
-  padding: 0.75rem 1rem;
+/* ==========================================================
+   SELECTION
+   ========================================================== */
+::selection {
+	background: color-mix(in srgb, var(--sl-color-accent) 28%, transparent);
+	color: inherit;
 }
 
-#setup-grid article.card:nth-child(1) { --c: #7c3aed; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(2) { --c: #6366f1; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(3) { --c: #4f46e5; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(4) { --c: #3b82f6; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(5) { --c: #0ea5e9; border-top: 3px solid var(--c); }
-#setup-grid article.card:nth-child(6) { --c: #06b6d4; border-top: 3px solid var(--c); }
-
-#setup-grid article.card .icon {
-  color: var(--c) !important;
-  background-color: color-mix(in srgb, var(--c) 15%, transparent) !important;
-  border-color: color-mix(in srgb, var(--c) 40%, transparent) !important;
+/* ==========================================================
+   FOCUS
+   ========================================================== */
+:focus-visible {
+	outline: 2px solid var(--sl-color-accent);
+	outline-offset: 3px;
+	border-radius: 3px;
 }
 
-/* Tables */
+/* ==========================================================
+   SCROLLBARS  (webkit)
+   ========================================================== */
+::-webkit-scrollbar {
+	width: 7px;
+	height: 7px;
+}
+::-webkit-scrollbar-track {
+	background: var(--sl-color-bg);
+}
+::-webkit-scrollbar-thumb {
+	background: color-mix(
+		in srgb,
+		var(--sl-color-accent) 35%,
+		var(--sl-color-bg)
+	);
+	border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: color-mix(
+		in srgb,
+		var(--sl-color-accent) 55%,
+		var(--sl-color-bg)
+	);
+}
+
+/* ==========================================================
+   TRANSITIONS  (smooth theme switch)
+   ========================================================== */
+html {
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease;
+}
+
+/* ==========================================================
+   LINKS
+   ========================================================== */
+.sl-markdown-content a:not(:where(.card, .link-card) *) {
+	color: var(--sl-color-text-accent);
+	text-decoration-color: color-mix(
+		in srgb,
+		var(--sl-color-accent) 45%,
+		transparent
+	);
+	text-underline-offset: 3px;
+	transition:
+		color 0.15s,
+		text-decoration-color 0.15s;
+}
+.sl-markdown-content a:not(:where(.card, .link-card) *):hover {
+	color: var(--sl-color-accent-high);
+	text-decoration-color: var(--sl-color-accent);
+}
+
+/* ==========================================================
+   INLINE CODE
+   ========================================================== */
+.sl-markdown-content :not(pre) > code {
+	background-color: var(--sl-color-bg-inline-code);
+	color: var(--sl-color-accent-high);
+	border: 1px solid color-mix(in srgb, var(--sl-color-accent) 28%, transparent);
+	border-radius: 4px;
+	padding: 0.1em 0.38em;
+	font-size: 0.88em;
+}
+
+/* ==========================================================
+   HEADINGS
+   ========================================================== */
+.sl-markdown-content h2 {
+	border-bottom: 1px solid
+		color-mix(in srgb, var(--sl-color-accent) 22%, transparent);
+	padding-bottom: 0.35em;
+}
+
+/* ==========================================================
+   HORIZONTAL RULE
+   ========================================================== */
+.sl-markdown-content hr {
+	border: none;
+	border-top: 1px solid
+		color-mix(in srgb, var(--sl-color-accent) 20%, transparent);
+}
+
+/* ==========================================================
+   BLOCKQUOTE
+   ========================================================== */
+.sl-markdown-content blockquote {
+	border-inline-start-color: color-mix(
+		in srgb,
+		var(--sl-color-accent) 55%,
+		transparent
+	);
+	background: color-mix(in srgb, var(--sl-color-accent) 6%, transparent);
+	border-radius: 0 6px 6px 0;
+}
+
+/* ==========================================================
+   TABLES
+   ========================================================== */
 .sl-markdown-content table {
-  display: table;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 1.5rem 0;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--sl-color-accent) 35%, transparent);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--sl-color-accent) 10%, transparent),
-    0 4px 24px color-mix(in srgb, var(--sl-color-accent) 10%, transparent);
+	display: table;
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	margin: 1.5rem 0;
+	border-radius: 8px;
+	overflow: hidden;
+	border: 1px solid color-mix(in srgb, var(--sl-color-accent) 35%, transparent);
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, var(--sl-color-accent) 10%, transparent),
+		0 4px 24px color-mix(in srgb, var(--sl-color-accent) 10%, transparent);
 }
-
 .sl-markdown-content thead tr {
-  background: linear-gradient(
-    120deg,
-    var(--sl-color-accent),
-    color-mix(in srgb, var(--sl-color-accent) 75%, #000)
-  );
+	background: linear-gradient(
+		120deg,
+		var(--t-table-head),
+		color-mix(in srgb, var(--t-table-head) 75%, #000)
+	);
 }
-
 .sl-markdown-content th {
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  padding: 0.7rem 1rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--sl-color-accent) 50%, #000);
-  text-align: start;
+	color: #fff;
+	font-weight: 600;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	padding: 0.7rem 1rem;
+	border-bottom: 1px solid color-mix(in srgb, var(--sl-color-accent) 50%, #000);
+	text-align: start;
 }
-
-/* Override Starlight's first/last-child zero padding */
-.sl-markdown-content :is(th, td):first-child { padding-inline-start: 1rem; }
-.sl-markdown-content :is(th, td):last-child  { padding-inline-end: 1rem; }
-
+.sl-markdown-content :is(th, td):first-child {
+	padding-inline-start: 1rem;
+}
+.sl-markdown-content :is(th, td):last-child {
+	padding-inline-end: 1rem;
+}
 .sl-markdown-content tbody tr {
-  transition: background 0.12s ease;
+	transition: background 0.12s ease;
 }
-
 .sl-markdown-content tbody tr:nth-child(even) {
-  background: color-mix(in srgb, var(--sl-color-accent) 5%, transparent);
+	background: color-mix(in srgb, var(--sl-color-accent) 5%, transparent);
 }
-
 .sl-markdown-content tbody tr:hover {
-  background: color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+	background: color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
 }
-
 .sl-markdown-content td {
-  padding: 0.6rem 1rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
-  color: var(--sl-color-text);
-  vertical-align: baseline;
+	padding: 0.6rem 1rem;
+	border-bottom: 1px solid
+		color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+	color: var(--sl-color-text);
+	vertical-align: baseline;
 }
-
 .sl-markdown-content tbody tr:last-child td {
-  border-bottom: none;
+	border-bottom: none;
 }
 
-/* Non-selectable shell prompt on bash code blocks */
+/* ==========================================================
+   CODE BLOCKS  (Expressive Code)
+   ========================================================== */
+/* Non-selectable shell prompt */
 pre[data-language="bash"] .ec-line:not(.no-prompt) .code::before {
-  content: '$ ';
-  user-select: none;
-  -webkit-user-select: none;
-  opacity: 0.4;
+	content: "$ ";
+	user-select: none;
+	-webkit-user-select: none;
+	opacity: 0.4;
 }
 
-/* Green tip asides */
+/* ==========================================================
+   ASIDES
+   ========================================================== */
+.starlight-aside {
+	border-radius: 6px;
+}
+
+/* Note — theme-aware lavender */
+.starlight-aside--note {
+	border-inline-start-color: var(--t-aside-note) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--t-aside-note) 8%,
+		transparent
+	) !important;
+}
+.starlight-aside--note .starlight-aside__title,
+.starlight-aside--note .starlight-aside__icon {
+	color: var(--t-aside-note) !important;
+}
+
+/* Tip — green */
 .starlight-aside--tip {
-  --sl-color-asides-text-accent: #22c55e;
-  --sl-color-asides-border: #16a34a;
-  --sl-color-asides-bg: color-mix(in srgb, #22c55e 8%, transparent);
-  border-inline-start-color: #16a34a !important;
-  background-color: color-mix(in srgb, #22c55e 8%, transparent) !important;
+	border-inline-start-color: color-mix(
+		in srgb,
+		var(--t-aside-tip) 70%,
+		#000
+	) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--t-aside-tip) 8%,
+		transparent
+	) !important;
+}
+.starlight-aside--tip .starlight-aside__title,
+.starlight-aside--tip .starlight-aside__icon {
+	color: var(--t-aside-tip) !important;
 }
 
-.starlight-aside--tip .starlight-aside__title {
-  color: #22c55e !important;
+/* Caution — orange */
+.starlight-aside--caution {
+	border-inline-start-color: color-mix(
+		in srgb,
+		var(--t-aside-caution) 70%,
+		#000
+	) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--t-aside-caution) 8%,
+		transparent
+	) !important;
+}
+.starlight-aside--caution .starlight-aside__title,
+.starlight-aside--caution .starlight-aside__icon {
+	color: var(--t-aside-caution) !important;
+}
+
+/* Danger — red */
+.starlight-aside--danger {
+	border-inline-start-color: color-mix(
+		in srgb,
+		var(--t-aside-danger) 70%,
+		#000
+	) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--t-aside-danger) 8%,
+		transparent
+	) !important;
+}
+.starlight-aside--danger .starlight-aside__title,
+.starlight-aside--danger .starlight-aside__icon {
+	color: var(--t-aside-danger) !important;
+}
+
+/* ==========================================================
+   CARDS  (CardGrid)
+   ========================================================== */
+#setup-grid article.card {
+	padding: 0.75rem 1rem;
+}
+#setup-grid article.card:nth-child(1) {
+	--c: var(--t-card-1);
+	border-top: 3px solid var(--c);
+}
+#setup-grid article.card:nth-child(2) {
+	--c: var(--t-card-2);
+	border-top: 3px solid var(--c);
+}
+#setup-grid article.card:nth-child(3) {
+	--c: var(--t-card-3);
+	border-top: 3px solid var(--c);
+}
+#setup-grid article.card:nth-child(4) {
+	--c: var(--t-card-4);
+	border-top: 3px solid var(--c);
+}
+#setup-grid article.card:nth-child(5) {
+	--c: var(--t-card-5);
+	border-top: 3px solid var(--c);
+}
+#setup-grid article.card:nth-child(6) {
+	--c: var(--t-card-6);
+	border-top: 3px solid var(--c);
+}
+#setup-grid article.card .icon {
+	color: var(--c) !important;
+	background-color: color-mix(in srgb, var(--c) 15%, transparent) !important;
+	border-color: color-mix(in srgb, var(--c) 40%, transparent) !important;
+}
+
+/* Generic card hover */
+.card {
+	border-color: color-mix(in srgb, var(--sl-color-accent) 20%, transparent);
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease;
+}
+.card:hover {
+	border-color: color-mix(in srgb, var(--sl-color-accent) 45%, transparent);
+	box-shadow: 0 2px 20px
+		color-mix(in srgb, var(--sl-color-accent) 10%, transparent);
+}
+
+/* ==========================================================
+   LINK CARDS
+   ========================================================== */
+.link-card {
+	border-color: color-mix(
+		in srgb,
+		var(--sl-color-accent) 25%,
+		transparent
+	) !important;
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease;
+}
+.link-card:hover {
+	border-color: color-mix(
+		in srgb,
+		var(--sl-color-accent) 55%,
+		transparent
+	) !important;
+	box-shadow: 0 2px 20px
+		color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+}
+
+/* ==========================================================
+   PAGINATION
+   ========================================================== */
+.pagination-links a {
+	border-color: color-mix(in srgb, var(--sl-color-accent) 28%, transparent);
+	transition:
+		border-color 0.2s ease,
+		background 0.2s ease;
+}
+.pagination-links a:hover {
+	border-color: var(--sl-color-accent);
+	background: color-mix(in srgb, var(--sl-color-accent) 8%, transparent);
+}
+
+/* ==========================================================
+   SIDEBAR
+   ========================================================== */
+/* Active page link */
+[aria-current="page"] {
+	background-color: color-mix(
+		in srgb,
+		var(--sl-color-accent) 30%,
+		transparent
+	) !important;
+	color: var(--sl-color-accent-high) !important;
+	font-weight: 600;
+	border-radius: 6px;
+}
+
+/* ==========================================================
+   SPLASH / HERO  (index page only — no sidebar on splash)
+   ========================================================== */
+html:not([data-has-sidebar]) h1#_top {
+	text-align: center;
 }

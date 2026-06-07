@@ -45,6 +45,15 @@ export default defineConfig({
         },
       ],
       expressiveCode: {
+        themes: ['vitesse-black', 'one-light'],
+        styleOverrides: {
+          borderRadius: '8px',
+          frames: {
+            frameBoxShadowCssValue: '0 4px 20px rgba(12, 10, 20, 0.35)',
+          },
+          borderColor: ({ theme }) =>
+            theme.type === 'dark' ? '#ccc9e730' : '#7876ab30',
+        },
         plugins: [bashPromptPlugin],
       },
       components: {
