@@ -16,3 +16,39 @@
   --sl-color-accent-high: #5b21b6;
   --sl-color-text-accent: #6d28d9;
 }
+
+/* Center page title on all pages */
+h1#_top {
+  text-align: center;
+}
+
+/* Setup spec cards — compact + colored accents */
+#setup-grid article.card {
+  padding: 0.75rem 1rem;
+}
+
+#setup-grid article.card:nth-child(1) { --c: #7c3aed; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(2) { --c: #3b82f6; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(3) { --c: #51a2da; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(4) { --c: #1d99f3; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(5) { --c: #10b981; border-top: 3px solid var(--c); }
+#setup-grid article.card:nth-child(6) { --c: #fcc624; border-top: 3px solid var(--c); }
+
+#setup-grid article.card .icon {
+  color: var(--c) !important;
+  background-color: color-mix(in srgb, var(--c) 15%, transparent) !important;
+  border-color: color-mix(in srgb, var(--c) 40%, transparent) !important;
+}
+
+/* Green tip asides */
+.starlight-aside--tip {
+  --sl-color-asides-text-accent: #22c55e;
+  --sl-color-asides-border: #16a34a;
+  --sl-color-asides-bg: color-mix(in srgb, #22c55e 8%, transparent);
+  border-inline-start-color: #16a34a !important;
+  background-color: color-mix(in srgb, #22c55e 8%, transparent) !important;
+}
+
+.starlight-aside--tip .starlight-aside__title {
+  color: #22c55e !important;
+}
